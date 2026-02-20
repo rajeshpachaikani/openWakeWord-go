@@ -18,11 +18,12 @@ import (
 const (
 	sampleRate = 16000
 	frameSize  = 1280
+	audioQueue = 32
 )
 
 func main() {
 	var (
-		modelPathsCSV = flag.String("models", "models/hey_ee_luu.onnx", "Comma-separated model file paths (.onnx or .tflite)")
+		modelPathsCSV = flag.String("models", "", "Comma-separated model file paths (.onnx or .tflite)")
 		threshold     = flag.Float64("threshold", 0.55, "Detection threshold [0.0-1.0]")
 		cooldown      = flag.Duration("cooldown", 1500*time.Millisecond, "Minimum time between detections per model")
 	)
@@ -65,7 +66,7 @@ func main() {
 	deviceConfig.Capture.Channels = 1
 	deviceConfig.Alsa.NoMMap = 1
 
-	audioFrames := make(chan []int16, 32)
+	audioFrames := make(chan []int16, audioQueue)
 
 	callbacks := malgo.DeviceCallbacks{
 		Data: func(_ []byte, inputSamples []byte, _ uint32) {
@@ -80,6 +81,7 @@ func main() {
 			select {
 			case audioFrames <- pcm:
 			default:
+				// Drop when full to avoid blocking the realtime audio callback.
 			}
 		},
 	}

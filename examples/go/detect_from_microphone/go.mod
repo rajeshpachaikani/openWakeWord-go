@@ -4,6 +4,7 @@ go 1.22
 
 require (
 	github.com/gen2brain/malgo v0.11.23
+	// Local development dependency resolved via replace below.
 	github.com/rajeshpachaikani/openWakeWord-go v0.0.0
 )
 
