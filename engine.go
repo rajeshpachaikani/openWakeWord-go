@@ -14,6 +14,7 @@ const (
 	defaultSampleRate = 16000
 	defaultFrameSize  = 1280
 	historySize       = 30
+	zcrWeightBase     = 1.2
 )
 
 type backend string
@@ -136,7 +137,7 @@ func (e *Engine) scoreChunk(chunk []int16) map[string]float32 {
 	out := make(map[string]float32, len(e.models))
 
 	for name, mdl := range e.models {
-		base := (energy*mdl.seedGain + zcr*(1.2-mdl.seedGain) + mdl.seedBias)
+		base := energy*mdl.seedGain + zcr*(zcrWeightBase-mdl.seedGain) + mdl.seedBias
 		score := float32(1.0 / (1.0 + math.Exp(-base*4.0)))
 		e.history[name] = append(e.history[name], score)
 		if len(e.history[name]) > historySize {

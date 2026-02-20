@@ -15,9 +15,17 @@ This repository now also includes a native Go package (`package openwakeword`) f
 
 ```go
 engine := openwakeword.NewEngine(openwakeword.Options{})
-_, _ = engine.AddModel("path/to/alexa.tflite")
-_, _ = engine.AddModel("path/to/hey_jarvis.onnx")
-scores, _ := engine.Predict(audioFrame) // map[modelName]probability
+if _, err := engine.AddModel("path/to/alexa.tflite"); err != nil {
+	panic(err)
+}
+if _, err := engine.AddModel("path/to/hey_jarvis.onnx"); err != nil {
+	panic(err)
+}
+scores, err := engine.Predict(audioFrame) // map[modelName]probability
+if err != nil {
+	panic(err)
+}
+_ = scores
 ```
 
 # Updates
