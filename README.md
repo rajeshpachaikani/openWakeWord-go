@@ -9,6 +9,17 @@ openWakeWord is an open-source wakeword library that can be used to create voice
 - [Training New Models](#training-new-models)
 - [FAQ](#faq)
 
+## Go package (native)
+
+This repository now also includes a native Go package (`package openwakeword`) for stream-oriented wakeword scoring.
+
+```go
+engine := openwakeword.NewEngine(openwakeword.Options{})
+_, _ = engine.AddModel("path/to/alexa.tflite")
+_, _ = engine.AddModel("path/to/hey_jarvis.onnx")
+scores, _ := engine.Predict(audioFrame) // map[modelName]probability
+```
+
 # Updates
 
 **2024/02/11**
