@@ -12,6 +12,19 @@ This is a simple example which allows you to test openWakeWord by using a locall
 
 Note that if you have more than one microphone connected to your system, you may need to adjust the PyAudio configuration in the script to select the appropriate input device.
 
+## Detect From Microphone (Go)
+
+A native Go microphone streaming example is included at `examples/go/detect_from_microphone`.
+
+1) Build and run:
+
+```
+cd examples/go/detect_from_microphone
+go run . -models /absolute/path/to/model.onnx
+```
+
+Use a comma-separated list in `-models` to load multiple `.onnx`/`.tflite` models.
+
 ## Capture Activations
 
 This script is designed to run in the background and capture activations for the included pre-trained models. You can specify the initialization arguments, activation threshold, and output directory for the saved audio files for each activation. To run the script, follow these steps:

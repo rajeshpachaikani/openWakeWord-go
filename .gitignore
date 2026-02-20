@@ -138,7 +138,13 @@ notebooks/
 
 # Most example files
 examples/
+!examples/
 !examples/audio/activation.wav
+!examples/go/
+!examples/go/detect_from_microphone/
+!examples/go/detect_from_microphone/go.mod
+!examples/go/detect_from_microphone/go.sum
+!examples/go/detect_from_microphone/main.go
 
 # archive files
 archive/
